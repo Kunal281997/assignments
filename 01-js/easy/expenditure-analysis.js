@@ -6,7 +6,30 @@
 */
 
 function calculateTotalSpentByCategory(transactions) {
-  return [];
+  let categoryBasedTotalAmount = [];
+
+  transactions.forEach((transaction) => {
+    if (categoryBasedTotalAmount.length === 0) {
+      categoryBasedTotalAmount.push({
+        category: transaction.category,
+        totalSpent: transaction.price,
+      });
+    } else {
+      const existingCategory = categoryBasedTotalAmount.find(
+        (spentCategory) => transaction.category === spentCategory.category
+      );
+      if (!existingCategory) {
+        categoryBasedTotalAmount.push({
+          category: transaction.category,
+          totalSpent: transaction.price,
+        });
+      } else {
+        existingCategory.totalSpent += transaction.price;
+      }
+    }
+  });
+  console.log("Categoy spents+--++--", categoryBasedTotalAmount);
+  return categoryBasedTotalAmount;
 }
 
 module.exports = calculateTotalSpentByCategory;
